@@ -65,6 +65,5 @@ class BetManager:
     # function to make five number Bet
     def fiveNumber(self, betAmount) -> None:
         self.checkBetAmount(betAmount)
-        self.bets.append(["0", "00", "1", "2", "3"], "five-number", 6, betAmount)
+        self.bets.append(Bet(["0", "00", "1", "2", "3"], "five-number", 6, betAmount))
 
-    
