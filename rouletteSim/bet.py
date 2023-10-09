@@ -7,7 +7,7 @@ class Bet:
         self.betAmount = betAmount
 
     def __str__(self):
-        return f"bet numbers: {self.betNumbers}, payout: {self.payout} : 1, bet amount: ${self.betAmount}"
+        return f"bet numbers: {self.betNumbers}, payout: {self.payout}:1, bet amount: ${self.betAmount}"
 
 
     # Get payout of Bet given the outcome of the roulette wheel
