@@ -69,13 +69,17 @@ class BetManager:
 
 
     # function to make a corner Bet
-    def makeCorner(self, betNumbers: [], betAmount:int) -> None:
-        self.checkValidBetArgs(betNumbers, 4, "corner")
+    def makeCorner(self, selectionVal: int, betAmount:int) -> None:
         self.checkBetAmount(betAmount)
+        self.checkSelectionValue(selectionVal, config.VALID_CORNER_VALS)
             
         #TODO - check for valid groups of four
+        betVals = []
+        for i in range(2):
+            betVals.append(selectionVal+i)
+            betVals.append(selectionVal+3+i)
 
-        self.bets.append(Bet(betNumbers, "corner", 11, betAmount))
+        self.bets.append(Bet([str(i) for i in betVals], "corner", 11, betAmount))
 
 
     # function to make five number Bet
@@ -94,7 +98,7 @@ class BetManager:
             betVals.append(selectionVal+i)
             betVals.append(selectionVal+3+i)
         
-        self.bets.append(Bet(betVals, "line", 5, betAmount))
+        self.bets.append(Bet([str(i) for i in betVals], "line", 5, betAmount))
 
     
     # function to make dozen Bet
@@ -160,13 +164,16 @@ class BetManager:
 
 
 #TODO - remove test code
-# code for testing
 
+
+# code for testing
 
 bub = BetManager()
 bub.makeRedBlack(False, 30)
 bub.makeHighLow(False, 40)
 bub.makeLine(10, 50)
+bub.makeCorner(31, 100)
+bub.makeCorner(2, 150)
 
 print(bub)
 
