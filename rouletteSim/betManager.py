@@ -35,8 +35,8 @@ class BetManager:
             raise exceptions.InvalidBetAmount(f"{betAmount} is an invalud bet amount.")
         
     
-    def checkSelectionValue(self, selectionVal: int) -> None:
-        if selectionVal < 1 or selectionVal > 3:
+    def checkSelectionValue(self, selectionVal: int, validValues: []) -> None:
+        if selectionVal not in validValues:
             raise exceptions.InvalidSelectionValue(f"{selectionVal} is an invalid value for selection.")
         
     
@@ -84,19 +84,23 @@ class BetManager:
         self.bets.append(Bet(["0", "00", "1", "2", "3"], "five-number", 6, betAmount))
 
 
-
-    #TODO - make function for line Bet
     # function to make line bet given bottom left value of the coverage values
-    def makeLine(self, betAmount:int) -> None:
+    def makeLine(self, selectionVal: int, betAmount:int) -> None:
         self.checkBetAmount(betAmount)
+        self.checkSelectionValue(selectionVal, config.VALID_LINE_VALS)
+
+        betVals = []
+        for i in range(3):
+            betVals.append(selectionVal+i)
+            betVals.append(selectionVal+3+i)
         
+        self.bets.append(Bet(betVals, "line", 5, betAmount))
 
     
-
     # function to make dozen Bet
     def makeDozen(self, selectionVal:int, betAmount:int) -> None:
         self.checkBetAmount(betAmount)
-        self. checkSelectionValue(selectionVal)
+        self.checkSelectionValue(selectionVal, config.VALID_ROWCOL_VALS)
        
         if selectionVal == 1:
             self.bets.append(Bet([str(i) for i in range(1, 13)], "dozen", 2, betAmount))
@@ -111,7 +115,7 @@ class BetManager:
     # function to make row Bet
     def makeRow(self, selectionVal:int, betAmount:int) -> None:
         self.checkBetAmount(betAmount)
-        self. checkSelectionValue(selectionVal)
+        self.checkSelectionValue(selectionVal, config.VALID_ROWCOL_VALS)
         
         if selectionVal == 1:
             self.bets.append(Bet([str(i) for i in range(1, 35, 3)], "row", 2, betAmount))
@@ -125,7 +129,7 @@ class BetManager:
 
     # function to make even-odd Bet
     def makeEvenOdd(self, even:bool, betAmount: int) -> None:
-        self.checkBetAmount(betAmount)
+        self.checkBetAmount(betAmount, ["1", "2", "3"])
 
         if even:
             self.bets.append(Bet([str(i) for i in range(2, 37, 2)], "even", 1, betAmount))
@@ -162,6 +166,7 @@ class BetManager:
 bub = BetManager()
 bub.makeRedBlack(False, 30)
 bub.makeHighLow(False, 40)
+bub.makeLine(10, 50)
 
 print(bub)
 

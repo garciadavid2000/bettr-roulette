@@ -38,3 +38,7 @@ ROULETTE_OUTCOMES = {
     "35": "black",
     "36": "red",
 }
+
+
+VALID_ROWCOL_VALS = [1, 2, 3]
+VALID_LINE_VALS = [1, 4, 7, 10, 13, 16, 19, 22, 25, 28, 31]
