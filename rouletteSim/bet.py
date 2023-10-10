@@ -1,3 +1,4 @@
+
 class Bet:
 
     def __init__(self, betNumbers=[], betType: str="",  payout: int=0, betAmount: int=0):

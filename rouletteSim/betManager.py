@@ -16,7 +16,7 @@ class BetManager:
         return outString
     
 
-    def getPayout(self, rouletteOutcome: str) -> int:
+    def getBetManagerPayout(self, rouletteOutcome: str) -> int:
         netPayout = 0
 
         for x in self.bets:
@@ -79,7 +79,7 @@ class BetManager:
             betVals.append(selectionVal+i)
             betVals.append(selectionVal+3+i)
 
-        self.bets.append(Bet([str(i) for i in betVals], "corner", 11, betAmount))
+        self.bets.append(Bet([str(i) for i in betVals], "corner", 8, betAmount))
 
 
     # function to make five number Bet
@@ -167,7 +167,7 @@ class BetManager:
 
 
 # code for testing
-
+'''
 bub = BetManager()
 bub.makeRedBlack(False, 30)
 bub.makeHighLow(False, 40)
@@ -177,5 +177,6 @@ bub.makeCorner(2, 150)
 
 print(bub)
 
-print(bub.getPayout("00"))
-print(bub.getPayout("2"))
+print(bub.getBetManagerPayout("00"))
+print(bub.getBetManagerPayout("2"))
+'''
