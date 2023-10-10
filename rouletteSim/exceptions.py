@@ -3,3 +3,6 @@ class InvalidBetNumbers(Exception):
 
 class InvalidBetAmount(Exception):
     pass
+
+class InvalidSelectionValue(Exception):
+    pass

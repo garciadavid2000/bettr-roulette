@@ -15,14 +15,29 @@ class BetManager:
         
         return outString
     
+
+    def getPayout(self, rouletteOutcome: str) -> int:
+        netPayout = 0
+
+        for x in self.bets:
+            netPayout += x.getBetPayout(rouletteOutcome)
+        
+        return netPayout
+    
+
     def checkValidBetArgs(self, betNumbers: [], numBetNums: int, tag: str) -> None:
         if betNumbers not in config.ROULETTE_OUTCOMES.keys() or len(betNumbers) != numBetNums:
-            raise exceptions.InvalidBetNumbers("f{betNumbers} is invalid for a {tag} bet")
+            raise exceptions.InvalidBetNumbers(f"{betNumbers} is invalid for a {tag} bet")
         
     
     def checkBetAmount(self, betAmount: int) -> None:
         if betAmount < 1:
-            raise exceptions.InvalidBetAmount("f{betAmount} is in invalud bet amount.")
+            raise exceptions.InvalidBetAmount(f"{betAmount} is an invalud bet amount.")
+        
+    
+    def checkSelectionValue(self, selectionVal: int) -> None:
+        if selectionVal < 1 or selectionVal > 3:
+            raise exceptions.InvalidSelectionValue(f"{selectionVal} is an invalid value for selection.")
         
     
 
@@ -62,65 +77,93 @@ class BetManager:
 
         self.bets.append(Bet(betNumbers, "corner", 11, betAmount))
 
+
     # function to make five number Bet
-    def fiveNumber(self, betAmount:int) -> None:
+    def makeFiveNumber(self, betAmount:int) -> None:
         self.checkBetAmount(betAmount)
         self.bets.append(Bet(["0", "00", "1", "2", "3"], "five-number", 6, betAmount))
 
 
+
     #TODO - make function for line Bet
+    # function to make line bet given bottom left value of the coverage values
+    def makeLine(self, betAmount:int) -> None:
+        self.checkBetAmount(betAmount)
+        
+
     
 
     # function to make dozen Bet
-    def dozen(self, dozenVal:int, betAmount:int) -> None:
+    def makeDozen(self, selectionVal:int, betAmount:int) -> None:
         self.checkBetAmount(betAmount)
-
-        #TODO - check valid dozenVal in [1,2,3]
-
-        if dozenVal == 1:
+        self. checkSelectionValue(selectionVal)
+       
+        if selectionVal == 1:
             self.bets.append(Bet([str(i) for i in range(1, 13)], "dozen", 2, betAmount))
         
-        elif dozenVal == 2:
+        elif selectionVal == 2:
             self.bets.append(Bet([str(i) for i in range(13, 25)], "dozen", 2, betAmount))
 
-        elif dozenVal == 3:
+        elif selectionVal == 3:
             self.bets.append(Bet([str(i) for i in range(25, 37)], "dozen", 2, betAmount))
 
 
-    # function to make even-odd Bet
-    def evenOdd(self, even:bool, betAmount: int) -> None:
+    # function to make row Bet
+    def makeRow(self, selectionVal:int, betAmount:int) -> None:
         self.checkBetAmount(betAmount)
+        self. checkSelectionValue(selectionVal)
+        
+        if selectionVal == 1:
+            self.bets.append(Bet([str(i) for i in range(1, 35, 3)], "row", 2, betAmount))
+        
+        elif selectionVal == 2:
+            self.bets.append(Bet([str(i) for i in range(2, 36, 3)], "row", 2, betAmount))
+
+        elif selectionVal == 3:
+            self.bets.append(Bet([str(i) for i in range(3, 37, 3)], "row", 2, betAmount))
+
+
+    # function to make even-odd Bet
+    def makeEvenOdd(self, even:bool, betAmount: int) -> None:
+        self.checkBetAmount(betAmount)
+
         if even:
             self.bets.append(Bet([str(i) for i in range(2, 37, 2)], "even", 1, betAmount))
-        
         else:
             self.bets.append(Bet([str(i) for i in range(1, 37, 2)], "odd", 1, betAmount))
 
 
-
     # function to make red-black Bet
-    def redBlack(self, red:bool, betAmount: int) -> None:
+    def makeRedBlack(self, red:bool, betAmount: int) -> None:
         self.checkBetAmount(betAmount)
+
         if red:
             self.bets.append(Bet([i for i in config.ROULETTE_OUTCOMES.keys() if config.ROULETTE_OUTCOMES.get(i) == "red"], "red", 1, betAmount))
-        
         else:
             self.bets.append(Bet([i for i in config.ROULETTE_OUTCOMES.keys() if config.ROULETTE_OUTCOMES.get(i) == "black"], "black", 1, betAmount))
 
 
     # function to make high-low Bet
-    def highLow(self, high:bool, betAmount: int) -> None:
+    def makeHighLow(self, high:bool, betAmount: int) -> None:
         self.checkBetAmount(betAmount)
+
         if high:
             self.bets.append(Bet([str(i) for i in range(19, 37)], "high", 1, betAmount))
-        
         else:
             self.bets.append(Bet([str(i) for i in range(1, 19)], "low", 1, betAmount))
 
 
 
 
+#TODO - remove test code
+# code for testing
+
 
 bub = BetManager()
-bub.redBlack(False, 30)
+bub.makeRedBlack(False, 30)
+bub.makeHighLow(False, 40)
+
 print(bub)
+
+print(bub.getPayout("00"))
+print(bub.getPayout("2"))
