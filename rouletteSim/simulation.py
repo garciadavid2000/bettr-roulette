@@ -21,7 +21,7 @@ testBet.makeCorner(2, 300)
 testBet.makeRedBlack(True, 20)
 testBet.makeSingle("4", 5)
 
-#testBet.incrementBetVal("3", 15)
+testBet.incrementBetVal("3", 15)
 
 testSim = Simulation(testBet)
 testSim2 = Simulation()

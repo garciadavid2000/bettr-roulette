@@ -29,7 +29,7 @@ class BetManager:
     def incrementBetVal(self, val: str, amount: int) -> None:
         for x in self.bets:
             if x.coversValue(val):
-                x.setBetAmount(x.getBetAmount() + amount)
+                x.increaseBetAmount(amount)
     
 
     def checkValidBetArgs(self, betNumbers: [], numBetNums: int, tag: str) -> None:

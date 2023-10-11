@@ -16,6 +16,9 @@ class Bet:
         payoutValue = self.payout*self.betAmount
         return payoutValue + self.betAmount if rouletteOutcome in self.betNumbers else -self.betAmount
 
+    # function to increase bet amount
+    def increaseBetAmount(self, amount) -> None:
+        self.betAmount += amount
 
     # Check if a Bet covers a specific outcome
     def coversValue(self, rouletteValue: str)-> bool:
