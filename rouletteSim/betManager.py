@@ -9,6 +9,10 @@ class BetManager:
 
 
     def __str__(self):
+
+        if len(self.bets) == 0:
+            return "There are no bets placed"
+
         outString = ""
         for x in self.bets:
             outString += str(x) + "\n"
