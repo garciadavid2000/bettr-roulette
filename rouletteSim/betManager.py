@@ -4,8 +4,8 @@ import exceptions
 
 class BetManager:
 
-    def __init__(self, bets: [] = []):
-        self.bets = bets
+    def __init__(self):
+        self.bets = []
 
 
     def __str__(self):
