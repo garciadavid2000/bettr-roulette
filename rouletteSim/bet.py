@@ -36,6 +36,6 @@ class Bet:
     
     # Setters
     def setBetAmount(self, betAmount):
-        self.betAmount = betAmount\
+        self.betAmount = betAmount
 
     

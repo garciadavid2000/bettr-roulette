@@ -25,6 +25,13 @@ class BetManager:
         return netPayout
     
 
+    # function to increment ALL bets that cover specific value by some amount
+    def incrementBetVal(self, val: str, amount: int) -> None:
+        for x in self.bets:
+            if x.coversValue(val):
+                x.setBetAmount(x.getBetAmount() + amount)
+    
+
     def checkValidBetArgs(self, betNumbers: [], numBetNums: int, tag: str) -> None:
         if betNumbers not in config.ROULETTE_OUTCOMES.keys() or len(betNumbers) != numBetNums:
             raise exceptions.InvalidBetNumbers(f"{betNumbers} is invalid for a {tag} bet")
@@ -45,7 +52,7 @@ class BetManager:
     def makeSingle(self, betNumbers: [], betAmount:int) -> None:
         self.checkValidBetArgs(betNumbers, 1, "single")
         self.checkBetAmount(betAmount)
-        self.bets.append(Bet(betNumbers, "single", 35, betAmount))
+        self.bets.append(Bet([betNumbers], "single", 35, betAmount))
 
 
     # function to make a split Bet
