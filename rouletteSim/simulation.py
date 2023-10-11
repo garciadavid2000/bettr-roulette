@@ -2,7 +2,7 @@ from betManager import BetManager
 
 class Simulation:
     
-    def __init__(self, startingBet: BetManager = BetManager()):
+    def __init__(self, startingBet: BetManager = BetManager([])):
         self.bet = startingBet
     
 
