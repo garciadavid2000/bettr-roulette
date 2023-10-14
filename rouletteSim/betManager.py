@@ -82,6 +82,19 @@ class BetManager:
 
         self.bets.append(Bet([str(i) for i in betVals], "street", 11, betAmount))
 
+    #function to make a double street bet
+    def makeDoubleStreet(self, selectionVal: int, betAmount:int) -> None:
+        self.checkBetAmount(betAmount)
+        self.checkSelectionValue(selectionVal, config.VALID_STREET_VALS[:-1])
+        
+        #TODO - check for valid triples
+        betVals = []
+        for i in range(3):
+            betVals.append(selectionVal + i)
+            betVals.append(selectionVal + 3 + i)
+
+
+        self.bets.append(Bet([str(i) for i in betVals], "street", 11, betAmount))
 
     # function to make a corner Bet
     def makeCorner(self, selectionVal: int, betAmount:int) -> None:
@@ -101,19 +114,6 @@ class BetManager:
     def makeFiveNumber(self, betAmount:int) -> None:
         self.checkBetAmount(betAmount)
         self.bets.append(Bet(["0", "00", "1", "2", "3"], "five-number", 6, betAmount))
-
-
-    # function to make line bet given bottom left value of the coverage values
-    def makeLine(self, selectionVal: int, betAmount:int) -> None:
-        self.checkBetAmount(betAmount)
-        self.checkSelectionValue(selectionVal, config.VALID_LINE_VALS)
-
-        betVals = []
-        for i in range(3):
-            betVals.append(selectionVal+i)
-            betVals.append(selectionVal+3+i)
-        
-        self.bets.append(Bet([str(i) for i in betVals], "line", 5, betAmount))
 
     
     # function to make dozen Bet
@@ -190,6 +190,7 @@ bub = BetManager()
 bub.makeCorner(31, 100)
 bub.makeCorner(2, 150)
 bub.makeStreet(7, 200)
+bub.makeDoubleStreet(1,100)
 
 print(bub)
 
