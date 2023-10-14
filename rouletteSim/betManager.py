@@ -70,13 +70,17 @@ class BetManager:
 
 
     # function to make a street Bet
-    def makeStreet(self, betNumbers: [], betAmount:int) -> None:
-        self.checkValidBetArgs(betNumbers, 3, "straight")
+    def makeStreet(self, selectionVal: int, betAmount:int) -> None:
         self.checkBetAmount(betAmount)
+        self.checkSelectionValue(selectionVal, config.VALID_STREET_VALS)
         
         #TODO - check for valid triples
+        betVals = []
+        for i in range(3):
+            betVals.append(selectionVal + i)
 
-        self.bets.append(Bet(betNumbers, "street", 11, betAmount))
+
+        self.bets.append(Bet([str(i) for i in betVals], "street", 11, betAmount))
 
 
     # function to make a corner Bet
@@ -178,16 +182,16 @@ class BetManager:
 
 
 # code for testing
-'''
+
 bub = BetManager()
-bub.makeRedBlack(False, 30)
-bub.makeHighLow(False, 40)
-bub.makeLine(10, 50)
+# bub.makeRedBlack(False, 30)
+# bub.makeHighLow(False, 40)
+# bub.makeLine(10, 50)
 bub.makeCorner(31, 100)
 bub.makeCorner(2, 150)
+bub.makeStreet(7, 200)
 
 print(bub)
 
 print(bub.getBetManagerPayout("00"))
 print(bub.getBetManagerPayout("2"))
-'''
