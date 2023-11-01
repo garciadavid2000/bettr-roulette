@@ -1,16 +1,21 @@
 from betManager import BetManager
+import config
+import random
 
 class Simulation:
     
-    def __init__(self, startingBet: BetManager = BetManager([])):
-        self.bet = startingBet
+    def __init__(self, startingBet = BetManager()):
+        self.bets = startingBet
     
 
     def __str__(self):
-        return str(self.bet)
+        return str(self.bets)
+
+    def spinWheel(self):
+        return random.choice(list(config.ROULETTE_OUTCOMES.keys()))
 
     def getNetPayout(self, rouletteOutcome: str) -> int:
-        return self.bet.getBetManagerPayout(rouletteOutcome)
+        return self.bets.getBetManagerPayout(rouletteOutcome)
     
 
 
@@ -27,11 +32,15 @@ testSim = Simulation(testBet)
 testSim2 = Simulation()
 
 
-
+print("=============================")
 print(testSim)
+print("=============================")
 print(testSim2)
 
 
 
 print(testSim.getNetPayout("3"))
 print(testSim2.getNetPayout("00"))
+
+for i in range(10):
+    print(testSim.getNetPayout(testSim.spinWheel()))
